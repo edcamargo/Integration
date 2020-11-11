@@ -4,8 +4,6 @@ Criação de uma APi restful.
 ## Regras de negócio
 
 ### A API precisa registrar os seguintes campos do Funcionarios: 
-  
-  - Registrar um usuário e recomendar músicas com base na cidade natal.
 
   - i) id;
   - i) name; 
@@ -28,4 +26,4 @@ Criação de uma APi restful.
 
 ## Resultado do projeto
 
-![screenshoot](https://github.com/edcamargo/integration/blob/master/Docs/Documentacao-Swagger.PNG "Screenshoot of the project")
+![screenshoot](https://github.com/edcamargo/Integration/blob/master/docs/Documentacao-Swagger.PNG "Screenshoot of the project")
