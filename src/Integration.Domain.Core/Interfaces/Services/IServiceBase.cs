@@ -6,7 +6,7 @@ namespace Integration.Domain.Core.Interfaces.Services
     {
         void Add(TEntity obj);
 
-        TEntity GetById(int id);
+        TEntity GetById(object id);
 
         IEnumerable<TEntity> GetAll();
 

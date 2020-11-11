@@ -1,10 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Integration.Domain.Core.Interfaces.Repositories;
+using Integration.Domain.Core.Interfaces.Services;
+using Integration.Domain.Entities;
 
 namespace Integration.Domain.Services.Services
 {
-    class EmployeeService
+    public class EmployeeService : ServiceBase<Employee>, IEmployeeService
     {
+        public readonly IEmployeeRepository _employeeRepository;
+
+        public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+        }
     }
 }

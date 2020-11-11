@@ -44,9 +44,9 @@ namespace Integration.InfraStruture.Data.Repositories
             _dataContext.SaveChanges();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
-            throw new System.NotImplementedException();
+            _dataContext.Dispose();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Integration.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Integration.InfraStruture.Data.Context
@@ -10,7 +11,7 @@ namespace Integration.InfraStruture.Data.Context
 
         #region DbSet
 
-        //public DbSet<Employee> Employee { get; set; }
+        public DbSet<Employee> Employee { get; set; }
 
         #endregion
 
@@ -20,7 +21,7 @@ namespace Integration.InfraStruture.Data.Context
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             // Mappings
-            //modelBuilder.ApplyConfiguration(new CustomerMap());
+            //modelBuilder.ApplyConfiguration(new EmployeeMap());
         }
 
         public override int SaveChanges()
