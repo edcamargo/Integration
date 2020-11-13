@@ -18,7 +18,7 @@ namespace Integration.Domain.Entities
 
         public bool UpdateSalary(double valorPercent)
         {
-            Salary = Salary * valorPercent;
+            Salary *= valorPercent;
             return true;
         }
 
@@ -46,6 +46,7 @@ namespace Integration.Domain.Entities
 
             RuleFor(c => c.Email)
                 .NotEmpty()
+                .EmailAddress()
                 .WithMessage(EmailErroMsg);
         }
     }

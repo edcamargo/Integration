@@ -4,7 +4,7 @@ namespace Integration.Domain.Core.Interfaces.Services
 {
     public interface IServiceBase<TEntity> where TEntity : class
     {
-        void Add(TEntity obj);
+        TEntity Add(TEntity obj);
 
         TEntity GetById(object id);
 

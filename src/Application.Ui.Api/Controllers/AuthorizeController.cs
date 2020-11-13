@@ -9,8 +9,9 @@ namespace Application.Ui.Api.Controllers
     public class AuthorizeController : ControllerBase
     {
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] string value)
         {
+            return Ok();
         }
     }
 }

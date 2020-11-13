@@ -14,9 +14,9 @@ namespace Integration.Domain.Services.Services
             _repository = Repository;
         }
 
-        public virtual void Add(TEntity obj)
+        public virtual TEntity Add(TEntity obj)
         {
-            _repository.Add(obj);
+            return _repository.Add(obj);
         }
 
         public virtual TEntity GetById(object id)

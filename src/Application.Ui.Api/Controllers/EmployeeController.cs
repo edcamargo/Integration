@@ -1,7 +1,10 @@
 ﻿using Integration.Domain.Core.Interfaces.Services;
+using Integration.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Web.Http;
 
 namespace Application.Ui.Api.Controllers
 {
@@ -12,29 +15,19 @@ namespace Application.Ui.Api.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
+        private readonly ILogger<EmployeeController> _logger;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService, ILogger<EmployeeController> logger)
         {
             _employeeService = employeeService;
+            _logger = logger;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            try
-            {
-                // var _employee = _employeeService.GetAll(page, length);
-                var _employee = _employeeService.GetAll();
-                return new OkObjectResult(_employee);
-            }
-            catch (ArgumentNullException e)
-            {
-                return NotFound(e.Message);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var _employee = _employeeService.GetAll();
+            return new OkObjectResult(_employee);
         }
 
         [HttpGet("{id}")]
@@ -45,18 +38,32 @@ namespace Application.Ui.Api.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Employee employee)
         {
+            employee.ConfirmationIntegration();
+            var returnEmp = _employeeService.Add(employee);
+
+            return new OkObjectResult(returnEmp);
+        }
+
+        [HttpPost("UpdateSalary")]
+        public IActionResult UpdateSalary([FromBody] Guid id)
+        {
+            var returnEmp = _employeeService.UpdateSalary(id);
+            return new OkObjectResult(returnEmp);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        public IActionResult Put(Guid id, [FromBody] Employee employee) 
+            => Ok();
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete([FromUri] Guid id)
         {
+            var _employee = _employeeService.GetById(id);
+            _employeeService.Remove(_employee);
+
+            return Ok();
         }
     }
 }

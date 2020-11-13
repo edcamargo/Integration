@@ -1,5 +1,6 @@
 using Application.Ui.Api.Security;
 using Application.Ui.Api.Security.Entities;
+using FluentValidation.AspNetCore;
 using Integration.InfraStructure.Ioc;
 using Integration.InfraStruture.Data.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,6 +31,8 @@ namespace Application.Ui.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddNewtonsoftJson();
+
             services.AddControllers();
 
             services.AddRouting();
@@ -39,6 +42,13 @@ namespace Application.Ui.Api
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
             //services.AddDbContextPool<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
 
+            // Configurando o FluentValidation
+            services.AddMvc().AddFluentValidation(options =>
+            {
+                options.RegisterValidatorsFromAssemblyContaining<Startup>();
+                options.RunDefaultMvcValidationAfterFluentValidationExecutes = true;
+            });
+            
             // Configurando o serviço de documentação do Swagger
             services.AddSwaggerGen(c =>
             {
@@ -81,7 +91,8 @@ namespace Application.Ui.Api
 
             services.AddSingleton<IConfiguration>(Configuration);
 
-            DependencyInjection.DependencyInjectionRepository(ref services);
+            DependencyInjection.DependencyInjectionValidations(ref services);
+            DependencyInjection.DependencyInjectionRepositories(ref services);
             DependencyInjection.DependencyInjectionServices(ref services);
 
             // pasta security

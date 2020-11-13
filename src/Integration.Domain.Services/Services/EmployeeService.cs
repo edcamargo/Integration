@@ -1,6 +1,7 @@
 ﻿using Integration.Domain.Core.Interfaces.Repositories;
 using Integration.Domain.Core.Interfaces.Services;
 using Integration.Domain.Entities;
+using System;
 
 namespace Integration.Domain.Services.Services
 {
@@ -11,6 +12,19 @@ namespace Integration.Domain.Services.Services
         public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository)
         {
             _employeeRepository = employeeRepository;
+        }
+
+        public Employee UpdateSalary(Guid idEmployee)
+        {
+            var employee = _employeeRepository.GetById(idEmployee);
+            
+            if (employee != null)
+            {
+                employee.UpdateSalary(7);
+                _employeeRepository.Update(employee);
+            }
+
+            return employee;
         }
     }
 }
