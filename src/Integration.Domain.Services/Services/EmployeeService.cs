@@ -17,7 +17,7 @@ namespace Integration.Domain.Services.Services
         public Employee UpdateSalary(Guid idEmployee)
         {
             var employee = _employeeRepository.GetById(idEmployee);
-            
+
             if (employee != null)
             {
                 employee.UpdateSalary(7);

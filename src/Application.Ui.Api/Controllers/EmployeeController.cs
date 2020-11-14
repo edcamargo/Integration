@@ -23,6 +23,15 @@ namespace Application.Ui.Api.Controllers
             _logger = logger;
         }
 
+        [HttpDelete]
+        public IActionResult Delete([FromUri] Guid id)
+        {
+            var _employee = _employeeService.GetById(id);
+            _employeeService.Remove(_employee);
+
+            return Ok();
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
@@ -46,24 +55,15 @@ namespace Application.Ui.Api.Controllers
             return new OkObjectResult(returnEmp);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(Guid id, [FromBody] Employee employee)
+            => Ok();
+
         [HttpPost("UpdateSalary")]
         public IActionResult UpdateSalary([FromBody] Guid id)
         {
             var returnEmp = _employeeService.UpdateSalary(id);
             return new OkObjectResult(returnEmp);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody] Employee employee) 
-            => Ok();
-
-        [HttpDelete]
-        public IActionResult Delete([FromUri] Guid id)
-        {
-            var _employee = _employeeService.GetById(id);
-            _employeeService.Remove(_employee);
-
-            return Ok();
         }
     }
 }

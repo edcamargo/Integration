@@ -48,7 +48,7 @@ namespace Application.Ui.Api
                 options.RegisterValidatorsFromAssemblyContaining<Startup>();
                 options.RunDefaultMvcValidationAfterFluentValidationExecutes = true;
             });
-            
+
             // Configurando o serviço de documentação do Swagger
             services.AddSwaggerGen(c =>
             {
