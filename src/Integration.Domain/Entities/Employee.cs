@@ -28,7 +28,7 @@ namespace Integration.Domain.Entities
         }
     }
 
-    public class EmployeeValidation : AbstractValidator<Employee>
+    internal class EmployeeValidation : AbstractValidator<Employee>
     {
         public static string NameErroMsg => "Nome inválido.";
         public static string SalaryErroMsg => "Salario inválido.";

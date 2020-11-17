@@ -1,4 +1,6 @@
-﻿using Integration.Domain.Core.Interfaces.Services;
+﻿using Application.Ui.Api.Dtos;
+using AutoMapper;
+using Integration.Domain.Core.Interfaces.Services;
 using Integration.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,62 +10,139 @@ using System.Web.Http;
 
 namespace Application.Ui.Api.Controllers
 {
-    [Produces("application/json")]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class EmployeeController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IEmployeeService _employeeService;
         private readonly ILogger<EmployeeController> _logger;
 
-        public EmployeeController(IEmployeeService employeeService, ILogger<EmployeeController> logger)
+        public EmployeeController(IMapper mapper, IEmployeeService employeeService, ILogger<EmployeeController> logger)
         {
+            _mapper = mapper;
             _employeeService = employeeService;
             _logger = logger;
-        }
-
-        [HttpDelete]
-        public IActionResult Delete([FromUri] Guid id)
-        {
-            var _employee = _employeeService.GetById(id);
-            _employeeService.Remove(_employee);
-
-            return Ok();
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            var _employee = _employeeService.GetAll();
-            return new OkObjectResult(_employee);
+            try
+            {
+                var _employee = _employeeService.GetAll();
+                return new OkObjectResult(_employee);
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult<string> Get(Guid id)
         {
-            var _employee = _employeeService.GetById(id);
-            return new OkObjectResult(_employee);
+            try
+            {
+                var _employee = _employeeService.GetById(id);
+                return new OkObjectResult(_employee);
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Employee employee)
+        public ActionResult Post([FromBody] EmployeeDto employeeDto)
         {
-            employee.ConfirmationIntegration();
-            var returnEmp = _employeeService.Add(employee);
+            try
+            {
+                if (employeeDto == null) 
+                    return BadRequest();
 
-            return new OkObjectResult(returnEmp);
+                var _employeeMap = _mapper.Map<Employee>(employeeDto);
+                var _employee = _employeeService.Add(_employeeMap);
+
+                return Created("", "Ok");
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message + " | " + e.InnerException.Message);
+            }
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody] Employee employee)
-            => Ok();
+        public IActionResult Put(Guid id, [FromBody] EmployeeDto employeeDto)
+        {
+            try
+            {
+                //_employeeService.Update(employee);
+                return Ok(employeeDto);
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message + " | " + e.InnerException.Message);
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromUri] Guid id)
+        {
+            try
+            {
+                var _employee = _employeeService.GetById(id);
+
+                if (_employee != null)
+                {
+                    _employeeService.Remove(_employee);
+                }
+
+                return Ok();
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpPost("UpdateSalary")]
         public IActionResult UpdateSalary([FromBody] Guid id)
         {
-            var returnEmp = _employeeService.UpdateSalary(id);
-            return new OkObjectResult(returnEmp);
+            try
+            {
+                var _employee = _employeeService.UpdateSalary(id);
+                return new OkObjectResult("Salário alterado");
+            }
+            catch (ArgumentNullException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message + " | " + e.InnerException.Message);
+            }
         }
     }
 }

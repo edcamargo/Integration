@@ -18,6 +18,8 @@ namespace Integration.Domain.Services.Services
         {
             var employee = _employeeRepository.GetById(idEmployee);
 
+            // Employee _employee = new Employee("", 10.00, "edwin.desenv@gmail.com");
+
             if (employee != null)
             {
                 employee.UpdateSalary(7);

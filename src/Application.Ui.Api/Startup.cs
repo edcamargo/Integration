@@ -1,5 +1,6 @@
 using Application.Ui.Api.Security;
 using Application.Ui.Api.Security.Entities;
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using Integration.InfraStructure.Ioc;
 using Integration.InfraStruture.Data.Context;
@@ -32,10 +33,9 @@ namespace Application.Ui.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
-
             services.AddControllers();
-
             services.AddRouting();
+            services.AddMvc().AddControllersAsServices();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
@@ -91,7 +91,8 @@ namespace Application.Ui.Api
 
             services.AddSingleton<IConfiguration>(Configuration);
 
-            DependencyInjection.DependencyInjectionValidations(ref services);
+            //DependencyInjection.Validations(ref services);
+            //DependencyInjection.DependencyInjectionValidations(ref services);
             DependencyInjection.DependencyInjectionRepositories(ref services);
             DependencyInjection.DependencyInjectionServices(ref services);
 
@@ -133,6 +134,10 @@ namespace Application.Ui.Api
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser().Build());
             });
+
+
+            // Add AutoMapper
+            services.AddAutoMapper(typeof(Startup));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -27,11 +27,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1 - Api", "1.1 - Api", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Ui.ConsoleApp", "src\Application.Ui.ConsoleApp\Application.Ui.ConsoleApp.csproj", "{9AB50201-3993-4915-A3DB-9D71A52E4076}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Ui.Api", "src\Application.Ui.Api\Application.Ui.Api.csproj", "{6926F9F2-8531-42B8-8EF1-7596F52D9D51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Ui.Api", "src\Application.Ui.Api\Application.Ui.Api.csproj", "{6926F9F2-8531-42B8-8EF1-7596F52D9D51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration.Domain.Tests", "test\Integration.Domain.Tests\Integration.Domain.Tests.csproj", "{31E0C72D-2117-4840-A0CE-7BD171B86AE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration.Domain.Tests", "test\Integration.Domain.Tests\Integration.Domain.Tests.csproj", "{31E0C72D-2117-4840-A0CE-7BD171B86AE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration.InfraStruture.Tests", "test\Integration.InfraStruture.Tests\Integration.InfraStruture.Tests.csproj", "{8EEC0B83-3F3F-4498-A314-43D48FD89B0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration.InfraStruture.Tests", "test\Integration.InfraStruture.Tests\Integration.InfraStruture.Tests.csproj", "{8EEC0B83-3F3F-4498-A314-43D48FD89B0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
