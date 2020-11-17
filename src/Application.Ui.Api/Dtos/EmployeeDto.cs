@@ -5,13 +5,12 @@ namespace Application.Ui.Api.Dtos
     public class EmployeeDto
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        //[StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {100} caracteres", MinimumLength = 2)]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string Salary { get; private set; }
+        public string Salary { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string Email { get; private set; }
+        public string Email { get; set; }
     }
 }

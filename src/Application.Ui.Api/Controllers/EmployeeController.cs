@@ -63,17 +63,17 @@ namespace Application.Ui.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] EmployeeDto employeeDto)
+        public IActionResult Post([FromBody] EmployeeDto employeeDto)
         {
             try
             {
                 if (employeeDto == null) 
                     return BadRequest();
 
-                var _employeeMap = _mapper.Map<Employee>(employeeDto);
-                var _employee = _employeeService.Add(_employeeMap);
+                var _employee = _mapper.Map<Employee>(employeeDto);
+                var _employeeRet = _employeeService.Add(_employee);
 
-                return Created("", "Ok");
+                return Created("/", "Created");
             }
             catch (ArgumentNullException e)
             {
@@ -90,7 +90,9 @@ namespace Application.Ui.Api.Controllers
         {
             try
             {
-                //_employeeService.Update(employee);
+                var _employee = _mapper.Map<Employee>(employeeDto);
+
+                _employeeService.Update(_employee);
                 return Ok(employeeDto);
             }
             catch (ArgumentNullException e)

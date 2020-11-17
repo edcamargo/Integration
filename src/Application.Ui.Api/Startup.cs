@@ -32,22 +32,13 @@ namespace Application.Ui.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson();
             services.AddControllers();
             services.AddRouting();
-            services.AddMvc().AddControllersAsServices();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
             //services.AddDbContextPool<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
-
-            // Configurando o FluentValidation
-            services.AddMvc().AddFluentValidation(options =>
-            {
-                options.RegisterValidatorsFromAssemblyContaining<Startup>();
-                options.RunDefaultMvcValidationAfterFluentValidationExecutes = true;
-            });
 
             // Configurando o serviço de documentação do Swagger
             services.AddSwaggerGen(c =>
@@ -73,6 +64,7 @@ namespace Application.Ui.Api
                                         + "API criada utilizando o padrão REST. \n\n\n"
                                         + "# Como usar a API?\n Logo a seguir você encontrará todos os recursos e metódos suportados pela API, sendo que essa página possibilita que você teste os recursos "
                                         + "e métodos diretamente através dela.\n\n\n# Autenticação\nVocê precisará de um Usuário e Senha para identificar a conta que está realizando solicitações para a API. \n",
+
                         Contact = new OpenApiContact
                         {
                             Name = "Edwin Ramos Camargo"
@@ -84,19 +76,16 @@ namespace Application.Ui.Api
                 options =>
                 {
                     options.ReportApiVersions = true;
-                    options.DefaultApiVersion = new ApiVersion(new DateTime(2020, 10, 11));
+                    options.DefaultApiVersion = new ApiVersion(new DateTime(2020, 6, 27));
                     options.Conventions.Add(new VersionByNamespaceConvention());
                 }
             );
 
             services.AddSingleton<IConfiguration>(Configuration);
 
-            //DependencyInjection.Validations(ref services);
-            //DependencyInjection.DependencyInjectionValidations(ref services);
             DependencyInjection.DependencyInjectionRepositories(ref services);
             DependencyInjection.DependencyInjectionServices(ref services);
 
-            // pasta security
             var signingConfigurations = new SigningConfigurations();
             services.AddSingleton(signingConfigurations);
 
@@ -134,7 +123,6 @@ namespace Application.Ui.Api
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser().Build());
             });
-
 
             // Add AutoMapper
             services.AddAutoMapper(typeof(Startup));
