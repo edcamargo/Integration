@@ -1,5 +1,6 @@
 ﻿using Application.Ui.ConsoleApp.Models;
 using Application.Ui.ConsoleApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -14,36 +15,43 @@ namespace Application.Ui.ConsoleApp
     {
         private static readonly string _archive = @ConfigurationManager.AppSettings["PATH_FILE"].ToString();
 
-        private static void Main(string[] args) 
+        private static void Main(string[] args)
             => Run(new EmployeeService()).GetAwaiter().GetResult();
 
         public static async Task Run(IEmployeeService _employeeService)
         {
-            var employee = ReadArchive();
-
-            foreach (var item in employee)
+            try
             {
-                var _response = await _employeeService.PostAsync(item);
+                var employee = ReadArchive();
 
-                if (_response != null && _response.IsSuccessStatusCode)
+                foreach (var item in employee)
                 {
-                    WriteLine("-----------------------------------------------");
-                    WriteLine("Employee inserted : " + item.Name);
-                    WriteLine("-----------------------------------------------");
+                    var _response = await _employeeService.PostAsync(item);
+
+                    if (_response != null && _response.IsSuccessStatusCode)
+                    {
+                        WriteLine("-----------------------------------------------");
+                        WriteLine("Employee inserted : " + item.Name);
+                        WriteLine("-----------------------------------------------");
+                    }
+                    else
+                        WriteLine("Error insert register.");
                 }
-                else
-                    WriteLine("Error insert register.");
+
+                WriteLine("-----------------------------------------------");
+                WriteLine("Method Get");
+                WriteLine("-----------------------------------------------");
+
+                var _responseGet = _employeeService.GetAsync();
+
+                WriteLine(_responseGet.Result);
+
+                ReadKey();
             }
-
-            WriteLine("-----------------------------------------------");
-            WriteLine("Method Get");
-            WriteLine("-----------------------------------------------");
-
-            var _responseGet = _employeeService.GetAsync();
-            
-            WriteLine(_responseGet.Result);
-
-            ReadKey();
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
         }
 
         /// <summary>
