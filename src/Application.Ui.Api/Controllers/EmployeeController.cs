@@ -67,7 +67,7 @@ namespace Application.Ui.Api.Controllers
         {
             try
             {
-                if (employeeDto == null) 
+                if (employeeDto == null)
                     return BadRequest();
 
                 var _employee = _mapper.Map<Employee>(employeeDto);

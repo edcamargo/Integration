@@ -26,4 +26,8 @@ Criação de uma APi restful.
 
 ## Resultado do projeto
 
+### Api
 ![screenshoot](https://github.com/edcamargo/Integration/blob/master/docs/Documentacao-Swagger.PNG "Screenshoot of the project")
+
+### Console Application
+![screenshoot](https://github.com/edcamargo/Integration/blob/master/docs/Execute-Console.PNG "Screenshoot of the project")
