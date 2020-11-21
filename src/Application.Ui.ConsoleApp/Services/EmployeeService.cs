@@ -21,6 +21,8 @@ namespace Application.Ui.ConsoleApp.Services
                 returno = await response.Content.ReadAsStringAsync();
             }
 
+            _httpClient.Dispose();
+
             var ret = JsonConvert.DeserializeObject(returno);
 
             return ret;
@@ -39,6 +41,8 @@ namespace Application.Ui.ConsoleApp.Services
             //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("", "VARIAVEL_TOKEN");
 
             var response = await _httpClient.SendAsync(request);
+
+            _httpClient.Dispose();
 
             return response;
         }
